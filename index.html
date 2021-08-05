@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <title>PDF.js Example</title>
+    <title>Share PDF Example</title>
 </head>
 <body>
     <button id="share-button">
-        Share aqui
+        Share
     </button>
 
     <h1>Isso vai ser um PDF qualquer</h1>
@@ -27,33 +26,10 @@
         //         console.log('ops cant share');
         //     }
         // });
-        var baseUrl = "<?php
-            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
-                $url = "https://";
-            } else {
-                $url = "http://";
-            }
-            // Append the host(domain name, ip) to the URL.
-            $url.= $_SERVER['HTTP_HOST'];
+        // var baseUrl = window.location.protocol + "//" + window.location.hostname;
 
-            // Append the requested resource location to the URL
-            // $url.= "/files/certificadoMEIHenrique.pdf";
-
-            echo $url;
-        ?>";
-        console.log(baseUrl);
-        // shareButton.onclick = async () => {
-        //     if (navigator.canShare) {
-        //         const response = await fetch(pdfUrl);
-        //         const buffer = await response.arrayBuffer();
-
-        //         const pdf = new File([buffer], "hello.pdf", { type: "application/pdf" });
-        //         const files = [pdf];
-
-        //         // Share PDF file if supported.
-        //         if (navigator.canShare({ files })) await navigator.share({ files });
-        //     }
-        // };
+        var baseUrl = window.location.href.replace("index.html", "");
+        // console.log(baseUrl);
 
         if ('canShare' in navigator) {
             const share = async function(shareimg, shareurl, sharetitle, sharetext) {
