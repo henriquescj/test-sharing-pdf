@@ -29,21 +29,24 @@
         // var baseUrl = window.location.protocol + "//" + window.location.hostname;
 
         var baseUrl = window.location.href.replace("index.html", "");
-        // console.log(baseUrl);
+        console.log(baseUrl);
 
         if ('canShare' in navigator) {
             const share = async function(shareimg, shareurl, sharetitle, sharetext) {
                 try {
                     const response = await fetch(shareimg);
                     const blob = await response.blob();
-                    const file = new File([blob], 'rick.jpg', {type: blob.type});
+                    const file = new File([blob], 'test.pdf', {type: blob.type});
+                    const files = [file];
 
-                    await navigator.share({
-                        url: shareurl,
-                        title: sharetitle,
-                        text: sharetext,
-                        files: [file]
-                    });
+                    if (navigator.canShare({files: files})) {
+                        await navigator.share({
+                            url: shareurl,
+                            title: sharetitle,
+                            text: sharetext,
+                            files: files
+                        });
+                    }
                 } catch (err) {
                     console.log(err.name, err.message);
                 }
