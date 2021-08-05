@@ -7,8 +7,11 @@
     <title>Share PDF Example</title>
 </head>
 <body>
-    <button id="share-button">
-        Share
+    <button id="share-pdf">
+        Share PDF
+    </button>
+    <button id="share-image">
+        Share Imagem
     </button>
 
     <h1>Isso vai ser um PDF qualquer</h1>
@@ -17,7 +20,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js" integrity="sha512-UqYzmySEh6DXh20njgxWoxDvuA4qqM8FmKWTkRvkYsg7LjzjscbMHj06zbt3oC6kP2Oa7Qow6v/lGLeMywbvQg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        var shareButton = document.getElementById('share-button');
+        var sharePdf = document.getElementById('share-pdf');
+        var shareImage = document.getElementById('share-image');
         // shareButton.addEventListener('click', event => {
         //     if (navigator.share) {
         //         console.log('uhul can share');
@@ -29,14 +33,14 @@
         // var baseUrl = window.location.protocol + "//" + window.location.hostname;
 
         var baseUrl = window.location.href.replace("index.html", "");
-        console.log(baseUrl);
+        // console.log(baseUrl);
 
         if ('canShare' in navigator) {
-            const share = async function(shareimg, shareurl, sharetitle, sharetext) {
+            const share = async function(shareimg, shareurl, sharetitle, sharetext, fileName) {
                 try {
                     const response = await fetch(shareimg);
                     const blob = await response.blob();
-                    const file = new File([blob], 'test.jpg', {type: blob.type});
+                    const file = new File([blob], fileName, {type: blob.type});
                     const files = [file];
 
                     if (navigator.canShare({files: files})) {
@@ -52,20 +56,25 @@
                 }
             };
 
-            shareButton.addEventListener('click', () => {
-                // share(
-                //     baseUrl + "files/foundation-light-excercise.pdf",
-                //     baseUrl,
-                //     'Teste pdf local',
-                //     'Um teste de pdf'
-                // );
+            sharePdf.addEventListener('click', () => {
+                share(
+                    baseUrl + "files/foundation-light-excercise.pdf",
+                    baseUrl,
+                    'Teste pdf local',
+                    'Um teste de pdf',
+                    "test.pdf"
+                );
+            });
+
+            shareImage.addEventListener('click', () => {
                 share(
                     baseUrl + "files/cute-cannabis.jpg",
                     baseUrl,
-                    'Teste pdf local',
-                    'Um teste de pdf'
+                    'Teste imagem local',
+                    'Um teste de imagem',
+                    "test.jpg"
                 );
-            });  
+            });
         } else {
             console.log("cant share");
         }
