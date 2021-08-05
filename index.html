@@ -36,7 +36,7 @@
                 try {
                     const response = await fetch(shareimg);
                     const blob = await response.blob();
-                    const file = new File([blob], 'test.pdf', {type: blob.type});
+                    const file = new File([blob], 'test.jpg', {type: blob.type});
                     const files = [file];
 
                     if (navigator.canShare({files: files})) {
@@ -53,13 +53,21 @@
             };
 
             shareButton.addEventListener('click', () => {
+                // share(
+                //     baseUrl + "files/foundation-light-excercise.pdf",
+                //     baseUrl,
+                //     'Teste pdf local',
+                //     'Um teste de pdf'
+                // );
                 share(
-                    baseUrl + "files/foundation-light-excercise.pdf",
+                    baseUrl + "files/cute-cannabis.jpg",
                     baseUrl,
                     'Teste pdf local',
                     'Um teste de pdf'
                 );
             });  
+        } else {
+            console.log("cant share");
         }
 
         var loadingTask = pdfjsLib.getDocument('files/foundation-light-excercise.pdf');
